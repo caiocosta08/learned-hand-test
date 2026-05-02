@@ -1,100 +1,175 @@
 # BS Detector
 
-Legal briefs lie. Not always intentionally — but they do. They cite cases that don't say what they claim. They quote authority with words quietly removed. They state facts that contradict the documents sitting right next to them.
+BS Detector is a multi-agent verification pipeline for legal briefs. It analyzes a Motion for Summary Judgment (MSJ), validates legal support and quoted text, checks factual consistency across the case file, and returns structured JSON for downstream review.
 
-Your task: build an AI pipeline that catches it.
+## Challenge Alignment
+
+This repository targets the Rivera v. Harmon Construction Group case-file challenge with three tiers:
+
+- Tier 1 (Core): citation extraction, support verification, quote checking, structured output.
+- Tier 2 (Expected): eval harness, cross-document consistency checks, uncertainty handling, structured agent handoff.
+- Tier 3 (Stretch): 4+ agents, confidence layer, judicial memo, resilient orchestration, readable UI, reflection.
+
+## What Is Implemented
+
+- `POST /analyze` endpoint returning a typed verification report.
+- 6 named agents with explicit, non-overlapping responsibilities.
+- Structured schema contracts via Pydantic models.
+- Failure-tolerant orchestration that records stage-level errors without crashing the pipeline.
+- Runnable eval harness with precision, recall, hallucination rate, adversarial checks, and dependency audit hooks.
+- Frontend report UI with summary, findings, memo, and report JSON.
+- Reflection document in `reflection.md`.
+
+## Agent Pipeline
+
+Execution order in `AnalyzerService` (`backend/app/services/analyzer.py`):
+
+1. `CitationExtractorAgent`
+2. `AuthorityVerifierAgent`
+3. `QuoteVerifierAgent`
+4. `FactConsistencyAgent`
+5. `ConfidenceScorerAgent`
+6. `JudicialMemoAgent`
+
+Each stage passes structured data objects, not unstructured prose blobs.
+
+## API Contract
+
+Endpoint:
+
+```http
+POST /analyze
+```
+
+Default behavior loads local documents from `backend/documents/*.txt`.
+
+Request body (optional):
+
+```json
+{
+  "use_local_documents": true,
+  "documents_override": {
+    "motion_for_summary_judgment": "...",
+    "police_report": "...",
+    "medical_records_excerpt": "...",
+    "witness_statement": "..."
+  }
+}
+```
+
+Response shape (see `backend/app/schemas/report.py`):
+
+- `case_name`
+- `summary`
+- `citations`
+- `citation_verifications`
+- `quote_verifications`
+- `findings`
+- `judicial_memo`
+- `errors`
 
 ## Setup
 
 ### Docker (recommended)
 
 ```bash
-cp .env.example .env      # Add your OpenAI API key
+cp .env.example .env
 docker compose up --build
 ```
 
-The API runs at `http://localhost:8002`. The UI runs at `http://localhost:5175`.
+Services:
 
-Both services hot-reload — edit files on your host and changes appear automatically.
+- API: `http://localhost:8002`
+- UI: `http://localhost:5175`
 
 ### Manual Setup
 
-#### Backend
+Backend:
 
 ```bash
 cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env      # Add your OpenAI API key
-uvicorn main:app --reload
+cp ../.env.example ../.env
+uvicorn main:app --reload --port 8002
 ```
 
-The API runs at `http://localhost:8002`.
-
-#### Frontend
+Frontend:
 
 ```bash
 cd frontend
 npm install
-npm run dev
+npm run dev -- --port 5175
 ```
 
-The UI runs at `http://localhost:5175`.
+## Usage
 
-## The Task
+Run analysis:
 
-Inside `backend/documents/` you'll find a small case file: a Motion for Summary Judgment in a personal injury lawsuit (*Rivera v. Harmon Construction Group*), along with a police report, medical records, and a witness statement.
+```bash
+curl -X POST http://localhost:8002/analyze
+```
 
-Build a multi-agent pipeline that analyzes these documents and produces a structured verification report. Your pipeline should:
+## Evaluation Suite
 
-**Core (Tier 1)**
-- Extract all citations from the Motion for Summary Judgment
-- For each citation, assess whether the cited authority actually supports the proposition as stated
-- Flag direct quotes for accuracy
-- Produce structured output (JSON) — not a wall of prose
+Run with a single command:
 
-**Expected (Tier 2)**
-- Build an eval harness that measures your pipeline's output quality. It must be runnable via a single command (e.g., `python run_evals.py`). At minimum, measure precision (avoiding false flags), recall (catching known flaws), and hallucination rate (not fabricating findings). You choose the approach — there's no prescribed framework or tooling.
-- Cross-document consistency check: compare facts stated in the MSJ against the police report, medical records, and witness statement
-- Express uncertainty appropriately — "could not verify" rather than fabricating a finding
-- Pass structured data between agents, not raw text blobs
+```bash
+cd backend
+python3 evals/run_evals.py
+```
 
-**Stretch (Tier 3)**
-- At least 4 well-defined agents with distinct, non-overlapping roles
-- A confidence scoring layer: each flag rated by how certain the pipeline is, with reasoning
-- A judicial memo agent: synthesizes the top findings into a one-paragraph summary written for a judge
-- Agent orchestration that handles failures gracefully
-- A UI that displays the report in a structured, readable way — not just raw JSON
-- A reflection document explaining the tradeoffs you made and what you'd do differently
+Reported metrics include:
 
-## Deliverables
+- `precision`
+- `recall`
+- `hallucination_rate`
+- `citation_extraction_recall`
+- `authority_could_not_verify_rate`
+- `adversarial_passed`
+- `adversarial_total`
+- `pip_audit_status` and `pip_audit_issues`
+- `npm_audit_status` and `npm_audit_issues`
 
-1. A working `POST /analyze` endpoint that returns a structured verification report
-2. Agent code with clear, named agents and explicit prompts
-3. A runnable eval suite with instructions in your README on how to run it
-4. A brief reflection (in the repo or as a separate file) on your design decisions and tradeoffs
+## Tests
 
-## Time
+```bash
+cd backend
+python3 -m pytest
+```
 
-6 hours. This is intentionally scoped beyond what most candidates will finish. Where you invest your time matters more than finishing everything. A well-tested pipeline that catches 3 flaws is stronger than an untested one that attempts 10.
+Coverage command:
 
-## Evals
+```bash
+cd backend
+python3 -m pytest --cov=app --cov-report=term-missing
+```
 
-We run your eval suite as part of our review. Document how to run it in your README. We care more about thoughtful metric design than perfect scores — an eval that honestly reports 60% recall tells us more than one that reports 100% on cherry-picked cases.
+## Project Structure
 
-## AI Usage
+```text
+.
+├── backend/
+│   ├── app/
+│   │   ├── agents/
+│   │   ├── prompts/
+│   │   ├── schemas/
+│   │   └── services/
+│   ├── documents/
+│   ├── evals/
+│   └── tests/
+├── frontend/
+├── docs/
+└── reflection.md
+```
 
-Use everything. That's the job. We want to see how you use it, not whether you do.
+## Known Limits
 
-## Evaluation
+- Authority verification relies on `backend/documents/authority_library.json`; if a citation is missing, the system returns `could_not_verify`.
+- Quote checks are currently bounded to supplied case-file documents and fuzzy matching heuristics.
+- Eval gold/adversarial sets are intentionally small and transparent.
 
-We are evaluating:
+## Reflection
 
-1. How you decompose the problem into agents
-2. How precisely you write prompts
-3. The quality of your eval approach — do you measure what matters?
-4. How far you get through the spec
-5. How honest your reflection is
-
-Not lines of code.
+Design tradeoffs and future improvements are documented in `reflection.md`.

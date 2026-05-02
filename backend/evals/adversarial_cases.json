@@ -1,0 +1,13 @@
+[
+  {
+    "id": "adv_001",
+    "description": "nonsense motion should not produce fabricated quote matches",
+    "documents_override": {
+      "motion_for_summary_judgment": "This motion contains no legal citation and no direct quote."
+    },
+    "assertions": {
+      "max_verified_issues": 2,
+      "max_quote_checks": 0
+    }
+  }
+]

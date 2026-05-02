@@ -1,0 +1,20 @@
+[
+  {
+    "id": "known_flaw_001",
+    "expected_type": "cross_document_date_conflict",
+    "expected_claim_contains": "March 14, 2021",
+    "expected_status": "verified_issue"
+  },
+  {
+    "id": "known_flaw_002",
+    "expected_type": "cross_document_ppe_conflict",
+    "expected_claim_contains": "PPE",
+    "expected_status": "verified_issue"
+  },
+  {
+    "id": "known_flaw_003",
+    "expected_type": "cross_document_unverified_inference",
+    "expected_claim_contains": "OSHA",
+    "expected_status": "could_not_verify"
+  }
+]

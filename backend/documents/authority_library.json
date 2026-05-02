@@ -1,0 +1,42 @@
+{
+  "privette v. superior court, 5 cal.4th 689 (1993)": {
+    "holding": "Privette generally limits hirer liability for injuries to contractor employees when the injury arises from contracted work, but recognizes doctrinal limits and later exceptions.",
+    "excerpt": "A hirer is presumptively not liable to an independent contractor's employee for injuries arising from the contracted work."
+  },
+  "seabright insurance co. v. us airways, inc., 52 cal.4th 590, 598 (2011)": {
+    "holding": "Seabright discusses delegation of workplace safety duties to independent contractors and limits tort claims against the hirer in that context.",
+    "excerpt": "The hirer delegated workplace safety obligations to the contractor under the Privette line of decisions."
+  },
+  "whitmore v. delgado scaffolding co., 334 f. supp. 2d 1189, 1195 (c.d. cal. 2004)": {
+    "holding": "Federal district analysis applied contractor-control principles in a scaffolding injury setting and granted summary judgment where subcontractor controlled work method.",
+    "excerpt": "Summary judgment granted where subcontractor controlled scaffolding operations and risk allocation favored the hirer."
+  },
+  "kellerman v. pacific coast construction, inc., 887 f.2d 1204, 1209 (9th cir. 1991)": {
+    "holding": "Compliance evidence may be relevant to reasonable care, but does not automatically eliminate all negligence disputes in every context.",
+    "excerpt": "Regulatory compliance is probative, not always dispositive, on standard-of-care issues."
+  },
+  "torres v. granite falls dev. corp., 198 cal.app.4th 223 (2011)": {
+    "holding": "California appellate decision addressing contractor-site liability boundaries under delegated safety duties.",
+    "excerpt": "Liability analysis turns on retained control and affirmative contribution factors."
+  },
+  "blackwell v. sunrise contractors, inc., 45 cal.app.4th 1012 (1996)": {
+    "holding": "Appellate treatment of contractor responsibilities and negligence allocation in construction-site injuries.",
+    "excerpt": "Control and duty allocation are central to negligence analysis."
+  },
+  "nguyen v. allied pacific construction co., 112 cal.app.4th 845 (2003)": {
+    "holding": "Discusses workplace safety duties and limits of hirer liability in contractor arrangements.",
+    "excerpt": "Delegated safety obligations can narrow direct hirer exposure absent retained-control contribution."
+  },
+  "reeves v. summit engineering group, 78 cal.app.4th 531 (2000)": {
+    "holding": "Construction injury liability depends on control, duty assumptions, and factual contribution to the hazard.",
+    "excerpt": "Record-specific evidence controls whether hirer liability survives summary judgment."
+  },
+  "dixon v. lone star structural, llc, 387 s.w.3d 154 (tex. app. 2012)": {
+    "holding": "Texas appellate authority on contractor and premises-liability allocation in industrial injury disputes.",
+    "excerpt": "Duty and control analysis limits owner or general-contractor exposure absent direct negligence."
+  },
+  "okafor v. brightline builders, inc., 291 so.3d 614 (fla. dist. ct. app. 2019)": {
+    "holding": "Florida appellate decision addressing construction injury claims and the role of contractual duty delegation.",
+    "excerpt": "Delegation and control evidence are decisive in determining liability scope."
+  }
+}

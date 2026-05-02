@@ -1,0 +1,13 @@
+[
+  {"id": "cit_001", "expected_citation": "Privette v. Superior Court"},
+  {"id": "cit_002", "expected_citation": "Whitmore v. Delgado Scaffolding Co."},
+  {"id": "cit_003", "expected_citation": "Kellerman v. Pacific Coast Construction"},
+  {"id": "cit_004", "expected_citation": "Seabright Insurance Co. v. US Airways"},
+  {"id": "cit_005", "expected_citation": "California Code of Civil Procedure Section 335.1"},
+  {"id": "cit_006", "expected_citation": "Torres v. Granite Falls Dev. Corp."},
+  {"id": "cit_007", "expected_citation": "Blackwell v. Sunrise Contractors, Inc."},
+  {"id": "cit_008", "expected_citation": "Dixon v. Lone Star Structural, LLC"},
+  {"id": "cit_009", "expected_citation": "Okafor v. Brightline Builders, Inc."},
+  {"id": "cit_010", "expected_citation": "Nguyen v. Allied Pacific Construction Co."},
+  {"id": "cit_011", "expected_citation": "Reeves v. Summit Engineering Group"}
+]
