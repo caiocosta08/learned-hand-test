@@ -1,12 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 
-const inferredApiBaseUrl =
-  window.location.hostname === 'amp-front.acutistecnologia.com'
-    ? 'https://amp-back.acutistecnologia.com'
-    : 'http://localhost:8002'
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || inferredApiBaseUrl
+const API_BASE_URL = 'https://learned-hand-back.acutistecnologia.com'
 
 function IconSpark() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l1.7 5.3L19 9l-5.3 1.7L12 16l-1.7-5.3L5 9l5.3-1.7L12 2z" /></svg>
