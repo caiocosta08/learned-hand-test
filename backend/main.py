@@ -17,7 +17,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5175",
-        "https://amp-front.acutistecnologia.com",
+        "https://learned-hand-front.acutistecnologia.com",
+        "https://learned-hand-back.acutistecnologia.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],

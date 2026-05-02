@@ -5,10 +5,16 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5175,
-    allowedHosts: ['amp-front.acutistecnologia.com'],
+    allowedHosts: [
+      'learned-hand-front.acutistecnologia.com',
+      'learned-hand-back.acutistecnologia.com',
+    ],
   },
   preview: {
     port: 5175,
-    allowedHosts: ['amp-front.acutistecnologia.com'],
+    allowedHosts: [
+      'learned-hand-front.acutistecnologia.com',
+      'learned-hand-back.acutistecnologia.com',
+    ],
   },
 })
